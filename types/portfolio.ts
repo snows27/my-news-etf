@@ -3,10 +3,9 @@ export type AssetKey =
   | 'SCBNASDAQ100E'
   | 'SCBWORLDE'
   | 'SCBGOLDE'
-  | 'NVDA'
-  | 'XAUUSD';
+  | 'NVDA';
 
-export type Platform = 'SCB_FUND_CLICK' | 'WEBULL' | 'EA_BOT';
+export type Platform = 'SCB_FUND_CLICK' | 'WEBULL';
 
 export interface AssetDefinition {
   key: AssetKey;

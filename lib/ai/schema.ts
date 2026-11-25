@@ -1,8 +1,7 @@
-import type { AIBriefResponse, NewsStatus, EventRisk } from '@/types/ai';
+import type { AIBriefResponse, NewsStatus } from '@/types/ai';
 
-const ASSET_KEYS = ['SCBSP500E', 'SCBNASDAQ100E', 'SCBWORLDE', 'SCBGOLDE', 'NVDA', 'XAUUSD'];
+const ASSET_KEYS = ['SCBSP500E', 'SCBNASDAQ100E', 'SCBWORLDE', 'SCBGOLDE', 'NVDA'];
 const VALID_STATUSES: NewsStatus[] = ['SUPPORTING', 'UNCERTAINTY', 'RISK'];
-const VALID_RISKS: EventRisk[] = ['LOW', 'MEDIUM', 'HIGH'];
 
 function isString(v: unknown): v is string {
   return typeof v === 'string';
@@ -33,15 +32,6 @@ function validateNVDA(v: unknown): string | null {
   return null;
 }
 
-function validateXAUUSD(v: unknown): string | null {
-  if (!isObject(v)) return 'XAUUSD: not an object';
-  if (!VALID_RISKS.includes(v.eventRisk as EventRisk)) return 'XAUUSD.eventRisk invalid';
-  if (!isArray(v.events)) return 'XAUUSD.events not array';
-  if (!isString(v.volatilityRationale)) return 'XAUUSD.volatilityRationale not string';
-  if (typeof v.noSignificantEvents !== 'boolean') return 'XAUUSD.noSignificantEvents not boolean';
-  return null;
-}
-
 export function validateAIResponse(raw: unknown): { valid: true; data: AIBriefResponse } | { valid: false; error: string } {
   if (!isObject(raw)) return { valid: false, error: 'response is not an object' };
 
@@ -59,9 +49,6 @@ export function validateAIResponse(raw: unknown): { valid: true; data: AIBriefRe
 
   const nvdaErr = validateNVDA(raw.assets['NVDA']);
   if (nvdaErr) return { valid: false, error: nvdaErr };
-
-  const xauusdErr = validateXAUUSD(raw.assets['XAUUSD']);
-  if (xauusdErr) return { valid: false, error: xauusdErr };
 
   // Validate topNews items
   for (const [i, item] of (raw.topNews as unknown[]).entries()) {

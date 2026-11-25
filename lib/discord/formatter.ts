@@ -1,4 +1,4 @@
-import type { AIBriefResponse, NewsStatus, EventRisk } from '@/types/ai';
+import type { AIBriefResponse, NewsStatus } from '@/types/ai';
 import { formatBangkokDate, nowInBangkok } from '@/lib/utils/timezone';
 
 const DISCORD_LIMIT = 1990; // slightly below 2000 for safety
@@ -7,12 +7,6 @@ function statusEmoji(status: NewsStatus): string {
   if (status === 'SUPPORTING') return '🟢';
   if (status === 'UNCERTAINTY') return '🟡';
   return '🔴';
-}
-
-function riskEmoji(risk: EventRisk): string {
-  if (risk === 'LOW') return '🟢 LOW';
-  if (risk === 'MEDIUM') return '🟡 MEDIUM';
-  return '🔴 HIGH';
 }
 
 function header(date: string, mode: 'ai' | 'fallback'): string {
@@ -29,9 +23,9 @@ function buildTopNews(data: AIBriefResponse): string {
     lines.push(
       `\n**${i + 1}. ${item.headline}**`,
       `📌 กระทบ: ${item.affectedAssets.join(', ')}`,
-      `📰 ${item.whatHappened}`,
-      `💡 เหตุผล: ${item.whyItMatters}`,
-      `🔗 กลไก: ${item.transmissionMechanism}`,
+      `📰 เกิดอะไรขึ้น: ${item.whatHappened}`,
+      `💡 ทำไมต้องสนใจ: ${item.whyItMatters}`,
+      `🔗 ส่งผลต่อพอร์ตยังไง: ${item.transmissionMechanism}`,
       `👁 ติดตาม: ${item.whatToMonitor}`,
       `_${item.source}_`
     );
@@ -64,31 +58,11 @@ function buildNVDASection(data: AIBriefResponse): string {
   return [
     `💻 **NVDA** ${statusEmoji(nvda.status)}`,
     `📰 ${nvda.news}`,
-    nvda.mechanism ? `🔗 กลไก: ${nvda.mechanism}` : '',
+    nvda.mechanism ? `🔗 ส่งผลต่อหุ้นยังไง: ${nvda.mechanism}` : '',
     nvda.whatToMonitor ? `👁 ติดตาม: ${nvda.whatToMonitor}` : '',
   ]
     .filter(Boolean)
     .join('\n');
-}
-
-function buildXAUUSDSection(data: AIBriefResponse): string {
-  const x = data.assets.XAUUSD;
-  const lines = [`🤖 **XAUUSD / EA RISK**`, `⚡ Event Risk: ${riskEmoji(x.eventRisk)}`];
-
-  if (x.noSignificantEvents || x.events.length === 0) {
-    lines.push('✅ วันนี้ไม่มี scheduled event ที่มีความเสี่ยงสูงผิดปกติสำหรับ XAUUSD');
-  } else {
-    for (const evt of x.events) {
-      lines.push(`\n• **${evt.description}**`);
-      lines.push(`  🕐 ${evt.ictTime}`);
-      lines.push(`  ${evt.whyItMatters}`);
-    }
-  }
-
-  if (x.volatilityRationale) {
-    lines.push(`\n📊 ${x.volatilityRationale}`);
-  }
-  return lines.join('\n');
 }
 
 function buildUpcomingSection(data: AIBriefResponse): string {
@@ -102,7 +76,7 @@ function buildUpcomingSection(data: AIBriefResponse): string {
 }
 
 function buildBottomLine(data: AIBriefResponse): string {
-  return `📝 **BOTTOM LINE**\n${data.bottomLine}`;
+  return `📝 **สรุปวันนี้**\n${data.bottomLine}`;
 }
 
 function buildSources(data: AIBriefResponse): string {
@@ -175,7 +149,6 @@ export function formatBrief(data: AIBriefResponse, mode: 'ai' | 'fallback'): str
     buildTopNews(data),
     buildSCBSection(data),
     buildNVDASection(data),
-    buildXAUUSDSection(data),
     buildUpcomingSection(data),
     buildBottomLine(data),
     buildSources(data),

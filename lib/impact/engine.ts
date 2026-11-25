@@ -18,9 +18,8 @@ function isDirectImpact(title: string, snippet: string, assetKey: string): boole
     SCBSP500E: [/S&P\s*500|SPX|US equities|US stocks/i],
     SCBNASDAQ100E: [/NASDAQ|nasdaq-100|QQQ|big tech.*stock|tech.*sell.?off/i],
     SCBWORLDE: [/global equit|world stock|international market|emerging market/i],
-    SCBGOLDE: [/gold price|gold (rises|falls|drops|surges)|XAU|XAUUSD.*gold/i],
+    SCBGOLDE: [/gold price|gold (rises|falls|drops|surges)|spot gold|XAU/i],
     NVDA: [/NVIDIA|NVDA|nvidia/i],
-    XAUUSD: [/XAUUSD|gold.*forex|forex.*gold|spot gold/i],
   };
 
   const patterns = directPatterns[assetKey] ?? [];

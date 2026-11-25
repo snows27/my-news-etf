@@ -5,6 +5,7 @@ import { getEnv } from '@/lib/utils/env';
 import { getModelId } from './config';
 import { buildPrompt } from './prompt';
 import { parseAIResponse } from './schema';
+import { repairMixedScriptWords } from './textRepair';
 import { logger } from '@/lib/utils/logger';
 
 type AnalysisResult =
@@ -115,7 +116,12 @@ export async function analyzeNews(mappings: ImpactMapping[]): Promise<AnalysisRe
       }
 
       logger.info('[ai] response: valid JSON', { model: getModelId() });
-      return { success: true, data: result.data, mode: 'haiku' };
+
+      const sourceTexts = limitedMappings.map((m) => `${m.article.title} ${m.article.snippet}`);
+      const { data, fixes } = repairMixedScriptWords(result.data, sourceTexts);
+      if (fixes.length > 0) logger.info('[ai] repaired mixed-script words', { fixes });
+
+      return { success: true, data, mode: 'haiku' };
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
       const transient = isTransient(err);

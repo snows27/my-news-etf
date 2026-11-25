@@ -16,11 +16,9 @@
 **Portfolio ที่ติดตาม:**
 - SCB Fund Click: SCBSP500E, SCBNASDAQ100E, SCBWORLDE, SCBGOLDE
 - Webull: NVDA
-- EA Bot ×2: XAUUSD (event risk monitoring)
 
 **⚠️ ข้อสำคัญ:**
 - สถานะ 🟢🟡🔴 สะท้อนสภาพแวดล้อมของข่าว/ปัจจัย ไม่ใช่คำแนะนำการลงทุน
-- ระดับ LOW/MEDIUM/HIGH สำหรับ XAUUSD หมายถึง event/volatility risk เท่านั้น ไม่ใช่ทิศทางราคา
 
 ---
 

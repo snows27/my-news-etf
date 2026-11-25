@@ -12,7 +12,6 @@ export default function Home() {
       <ul>
         <li>SCB Fund Click: SCBSP500E, SCBNASDAQ100E, SCBWORLDE, SCBGOLDE</li>
         <li>Webull: NVDA</li>
-        <li>EA Bot ×2: XAUUSD</li>
       </ul>
       <p><em>News monitoring only — not a trading system.</em></p>
     </main>

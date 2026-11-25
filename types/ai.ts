@@ -1,7 +1,6 @@
 import type { AssetKey } from './portfolio';
 
 export type NewsStatus = 'SUPPORTING' | 'UNCERTAINTY' | 'RISK';
-export type EventRisk = 'LOW' | 'MEDIUM' | 'HIGH';
 
 export interface TopNewsItem {
   headline: string;
@@ -29,13 +28,6 @@ export interface NVDASummary {
   whatToMonitor: string;
 }
 
-export interface XAUUSDRisk {
-  eventRisk: EventRisk;
-  events: { description: string; ictTime: string; whyItMatters: string }[];
-  volatilityRationale: string;
-  noSignificantEvents: boolean;
-}
-
 export interface UpcomingEvent {
   event: string;
   ictTime: string;
@@ -50,7 +42,6 @@ export interface AIBriefResponse {
     SCBWORLDE: AssetSummary;
     SCBGOLDE: AssetSummary;
     NVDA: NVDASummary;
-    XAUUSD: XAUUSDRisk;
   };
   upcomingEvents: UpcomingEvent[];
   bottomLine: string;

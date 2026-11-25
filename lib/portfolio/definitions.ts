@@ -9,6 +9,10 @@ export const ASSETS: AssetDefinition[] = [
       'S&P 500', 'S&P500', 'SPX', 'US equities', 'US stocks', 'Federal Reserve', 'Fed',
       'US economy', 'US GDP', 'US interest rates', 'US large-cap', 'Wall Street',
       'US CPI', 'US inflation', 'FOMC', 'US labor market', 'US earnings',
+      // US macro releases
+      'Core CPI', 'PCE', 'Core PCE', 'NFP', 'nonfarm payrolls', 'jobless claims', 'unemployment',
+      'ISM', 'PMI', 'Treasury yields', '10-year yield', 'Fed minutes', 'Fed speech',
+      'rate cut', 'rate hike', 'tariff', 'trade war',
     ],
     transmissionChains: [
       'Fed → interest rates → Treasury yields → US equities',
@@ -83,26 +87,6 @@ export const ASSETS: AssetDefinition[] = [
       'US-China export controls → NVDA China revenue → earnings → stock',
       'Hyperscaler AI capex increase → NVDA data center demand → revenue',
       'TSMC capacity expansion → NVDA chip supply → revenue growth',
-    ],
-  },
-  {
-    key: 'XAUUSD',
-    platform: 'EA_BOT',
-    name: 'Gold / USD (EA Bot)',
-    keywords: [
-      'FOMC', 'Fed', 'Federal Reserve', 'CPI', 'Core CPI', 'PCE', 'Core PCE',
-      'NFP', 'nonfarm payrolls', 'unemployment', 'jobless claims',
-      'GDP', 'ISM', 'PMI', 'ISM Manufacturing', 'ISM Services',
-      'US dollar', 'DXY', 'dollar index', 'Treasury yields', '10-year yield',
-      'gold', 'XAUUSD', 'XAU', 'Fed speech', 'Fed minutes',
-      'geopolitical', 'central bank', 'tariff', 'trade war',
-      'inflation', 'deflation', 'rate cut', 'rate hike', 'pivot',
-    ],
-    transmissionChains: [
-      'FOMC decision → rate expectations → USD → XAUUSD volatility',
-      'Hot CPI print → Fed hawkish repricing → USD strength → Gold pressure',
-      'Geopolitical escalation → safe-haven demand → XAUUSD volatility',
-      'NFP surprise → yield spike → USD rally → Gold sell-off',
     ],
   },
 ];
