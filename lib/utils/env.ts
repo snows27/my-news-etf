@@ -32,12 +32,12 @@ export function getEnv(): EnvConfig {
     discordWebhookUrl: discordWebhookUrl!,
     cronSecret: cronSecret!,
     anthropicApiKey: process.env.ANTHROPIC_API_KEY ?? null,
-    anthropicModel: process.env.ANTHROPIC_MODEL ?? 'claude-haiku-4-5-20251001',
+    anthropicModel: process.env.ANTHROPIC_MODEL ?? 'claude-haiku-5-5',
     newsApiKey: process.env.NEWS_API_KEY ?? null,
     maxAiArticles: parseInt(process.env.MAX_AI_ARTICLES ?? '5', 10),
     maxSnippetChars: parseInt(process.env.MAX_SNIPPET_CHARS ?? '600', 10),
     maxTotalInputChars: parseInt(process.env.MAX_TOTAL_INPUT_CHARS ?? '15000', 10),
-    maxOutputTokens: parseInt(process.env.MAX_OUTPUT_TOKENS ?? '4000', 10),
+    maxOutputTokens: parseInt(process.env.MAX_OUTPUT_TOKENS ?? '8000', 10),
     aiTimeoutMs: parseInt(process.env.AI_TIMEOUT_MS ?? '120000', 10),
   };
 

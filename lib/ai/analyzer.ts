@@ -33,14 +33,27 @@ async function callClaude(prompt: string): Promise<string> {
       {
         model: modelId,
         max_tokens: env.maxOutputTokens,
+        // Low effort keeps thinking short: this is a once-a-day summary that must
+        // finish well inside the 60s Vercel Hobby function limit.
+        output_config: { effort: 'low' },
         messages: [{ role: 'user', content: prompt }],
       },
       { signal: controller.signal }
     );
 
-    const block = message.content[0];
-    if (block.type !== 'text') throw new Error('Unexpected response type from Claude');
-    return block.text;
+    if (message.stop_reason === 'refusal') throw new Error('Claude declined the request (refusal)');
+    if (message.stop_reason === 'max_tokens') {
+      throw new Error('Claude response truncated (max_tokens) — raise MAX_OUTPUT_TOKENS');
+    }
+
+    // Newer models return thinking blocks before the answer, so find the text block
+    // rather than assuming it is content[0].
+    const text = message.content
+      .filter((b): b is Anthropic.TextBlock => b.type === 'text')
+      .map((b) => b.text)
+      .join('');
+    if (!text) throw new Error('No text in Claude response');
+    return text;
   } finally {
     clearTimeout(timeout);
   }
